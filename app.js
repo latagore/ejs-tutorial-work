@@ -7,7 +7,7 @@ const posts = [
     id: 1,
     author: 'John',
     title: 'Templating with EJS',
-    body: 'Blog post number 1'
+    body: 'Hello my name is John. '
   },
   {
     id: 2,
@@ -29,6 +29,10 @@ const posts = [
   }
 ]
 
+posts.forEach((post) => {
+  post.preview = post.body.split(/\s+/).slice(0, 2).join(" ") + "...";
+})
+
 // set the view engine to ejs
 app.set('view engine', 'ejs')
 
@@ -46,11 +50,7 @@ app.get('/post/:id', (req, res) => {
   })[0]
 
   // render the `post.ejs` template with the post content
-  res.render('post', {
-    author: post.author,
-    title: post.title,
-    body: post.body
-  })
+  res.render('post', post);
 })
 
 app.listen(8080)
